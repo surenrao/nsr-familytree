@@ -1,0 +1,96 @@
+@CHARSET "ISO-8859-1";
+form fieldset
+{
+	width:700px; /*600px*/
+	margin: 10px auto;
+	padding: 5px 0 5px 5px;
+
+	/*font-family:Arial, Helvetica, sans-serif;
+	font-size:0.9em;*/
+	
+	/*border:1px solid black;	
+	border-bottom:none;
+	border-left:none;
+	border-right:none; */
+	border: none;		
+}
+
+form fieldset legend
+{
+	font-size: 150%;	
+	border:none;
+   	/*color:green;*/    
+	padding:0 7px 0 5px;
+	margin:0 0 20px 30px; 
+	
+	
+	/*font-family:Georgia, "Times New Roman", Times, serif;*/
+}
+
+form fieldset .label_element 
+{
+/*	position: relative;*/
+	display: block;
+ 	/*border: 1px solid #f00;*/
+	padding: 3px 0 3px 0;
+	margin: 3px 0 3px 0;
+	float: left;
+	width:65%;
+}
+form fieldset p.label_element 
+{
+	font-size:normal;
+  	margin: 0 0 5px 0; 
+}
+
+form fieldset .label_element label
+{
+	display: block;  	  
+	text-align: right;
+	vertical-align: middle;
+	width: 90px;	
+	padding: 0 5px 0 0;
+	margin: 0;
+	float: left;
+	color: #000000;	
+	/*font-family:Arial, Helvetica, sans-serif;*/
+}
+
+form fieldset p.label_radio 
+{
+	/*clear: both; float: none;*/
+	float: left;
+	clear: none;
+	position: relative;
+	/*border: 1px solid #fff;*/
+	margin:2px 0 2px 5px;
+	width:70%;
+}
+
+form fieldset p.label_radio input 
+{
+	position: absolute;
+	left: 86px;
+	top: -2px;
+}
+
+form fieldset p.label_radio label 
+{
+	display: block;
+	margin-left: 110px;
+	width: 70%;	
+	/*border: 1px solid #0f0;*/
+}
+
+p.para_button 
+{
+	display:block;
+	margin-left: 165px;
+	width: 70%;	
+}
+
+.errorText
+{
+	font-family:courier;
+	color:red;
+}

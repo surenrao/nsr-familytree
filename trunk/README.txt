@@ -20,3 +20,17 @@ HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
 WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
 FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 OTHER DEALINGS IN THE SOFTWARE.
+
+
+
+<VirtualHost ftree:80>
+	ServerName ftree
+	DocumentRoot "C:/xampp/htdocs/ftree/web"
+	<Directory "C:/xampp/htdocs/ftree/web">
+	AllowOverride All
+	Options All
+	</Directory>
+	php_value include_path ".;C:/xampp/htdocs/ftree/include;C:/xampp/htdocs/ftree/lib;C:/xampp/php/PEAR"
+	php_value magic_quotes_gpc off
+	php_value register_globals off
+</VirtualHost>
