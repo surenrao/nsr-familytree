@@ -1,3 +1,7 @@
+-----------
+MIT License 
+-----------
+
 Copyright (c) 2008, Suryanarayana Nyayapati
 
 Permission is hereby granted, free of charge, to any person
@@ -21,7 +25,9 @@ WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
 FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 OTHER DEALINGS IN THE SOFTWARE.
 
-
+---------------------
+Apache Configurations
+---------------------
 
 <VirtualHost ftree:80>
 	ServerName ftree
@@ -34,3 +40,29 @@ OTHER DEALINGS IN THE SOFTWARE.
 	php_value magic_quotes_gpc off
 	php_value register_globals off
 </VirtualHost>
+
+
+For Windows add a entry in C:\WINDOWS\system32\drivers\etc\hosts
+
+127.0.0.2       ftree
+
+---------------------------
+Develeopment Configurations
+---------------------------
+* Eclipse Europa PDT
+
+* Project include path :- include, lib, PEAR
+
+* PEAR packages in use:-
+	# pear install -f Text_CAPTCHA
+	# pear install -f Image_Text
+	# pear install Text_Password
+	
+* External Libraries: Zend Framework 1.0.4, Smarty 2.6.19, jquery-1.2.3
+
+* XAMPP: Windows Version 1.6.5
+
+* Database: MySQL 5.0.51
+
+* Webserver: Apache 2, PHP: 5.2.5
+
