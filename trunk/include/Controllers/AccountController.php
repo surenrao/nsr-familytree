@@ -39,17 +39,17 @@ class AccountController extends CustomControllerAction
 		$redirect = $request->getParam('redirect');
 		if (strlen($redirect) == 0)
 			$redirect = $request->getServer('REQUEST_URI');
-		if (strlen($redirect) == 0)
+		if (strlen($redirect) == 0)//if its still not set
 			$redirect = '/account';
 			
 		if ($request->isPost()) //$this->_request->isPost()
 		{			
             $formData = $this->_getAllParams();        
         	$this->validateLoginForm($formData);
-        	$this->view->formData = $formData;
+        	
 			if(count($this->error)==0)
 			{
-				$adapter = new Zend_Auth_Adapter_DbTable($this->db);//, 'users', 'username', 'password', 'md5(?)');
+				$adapter = new Zend_Auth_Adapter_DbTable($this->db);
 				$adapter->setTableName('users')
 						->setIdentityColumn('username')
 						->setCredentialColumn('password')
@@ -63,7 +63,8 @@ class AccountController extends CustomControllerAction
 				
 				if ($result->isValid()) 
 				{						
-					$userData = $adapter->getResultRowObject(array('user_id','username','user_type','ts_created','ts_last_login'));
+					$userData = $adapter->getResultRowObject(array('user_id',
+					'username','user_type','ts_created','ts_last_login'));
 					$userDao = new UserDao();
 					$userDao->updateLastLogin($userData->user_id);						
 							
@@ -71,8 +72,7 @@ class AccountController extends CustomControllerAction
 					$this->_redirect($redirect);
 				}
 				$this->error['User'] = 'Your login details were invalid<br>\n'. $result->getMessages() ;
-			}
-        	
+			}        	
             //echo $this->_request->getMethod();			           
 		}		
 		$this->view->redirect = $redirect;
@@ -103,40 +103,33 @@ class AccountController extends CustomControllerAction
 			echo "</pre>";
 			$formData = $this->_getAllParams();
 			$this->validateRegisterForm($formData);
-			$this->view->formData = $formData;
-			$formData['password'];
-			$formData['confirmpassword'];
-			$formData['firstname'];
-			$formData['lastname'];
-			$this->view->dob = $formData['dobYear']. '-'. $formData['dobMonth'] . '-'.$formData['dobDay'];
-			$formData['email'];
-			$formData['dobMonth'];
-			$formData['dobDay'];
-			$formData['dobYear'];		
-			
-			if(!$this->error)
+			if(count($this->error)==0) //if(!$this->error)
 			{
-				//unset($_SESSION['captcha']['captcha_phrase']);
+				$user = new User();
+				$user->username = $formData['username'];
+				$user->password = $formData['password'];
+				$user->userType = 'memeber';
+				
+				$userPrfil = new UserProfile();
+				$userPrfil->firstName = $formData['firstname'];
+				$userPrfil->lastName = $formData['lastname'];
+				$userPrfil->email = $formData['email'];
+				$userPrfil->dateOfBirth = new Zend_Date(
+				array('year'=>$formData['dobYear'],'month'=>$formData['dobMonth'],'day'=>$formData['dobDay']));
+				$userDao = new UserDao();
+				$userDao->addUser($user,$userPrfil);			
 				unset($session->captcha_phrase);
+				$this->_redirect('/account/registercomplete');
 			}
-		}
-		else
-		{			
-			$formData['captcha'] = $session->captcha_phrase;// $captcha_phrase;
-		}
-		$this->view->formData =$formData;
-//		$error['username'][0] = "Required!";
-//		$error['username'][1] = "Invalid";
-//		$error['password'][0] = "Required!"; 
-//		$error['confirmpassword'][0] = "Required!";		
-//		$this->view->error = $error;
+			
+			$this->view->dob = $formData['dobYear']. '-'. $formData['dobMonth'] . '-'.$formData['dobDay'];			
+		}	
 	}
 	//guest can access
 	public function registercompleteAction(){}
-
 	
+	public function activateAction(){}
 
-	
 	private function validateRegisterForm(&$formData)
 	{		
 		$validatorUser = new Zend_Validate();
@@ -257,32 +250,13 @@ class AccountController extends CustomControllerAction
         $session = new Zend_Session_Namespace('captcha'); 
 		if($formData['captcha']!=$session->captcha_phrase)//$_SESSION['captcha']['captcha_phrase']
 		{
-			$this->error['captcha'][0] ="Not Valid\n";
+			$this->error['captcha'][0] ="Not Valid phrase\n";
 		}
 		
         $this->view->error = $this->error;
+		$this->view->formData = $formData;        
+	}
 
-        
-	}
-	/**
-	 * Enter description here...
-	 *
-	 * @param array array('year' => 2006, 'month' => 4, 'day' => 18);
-	 */
-	private function getAge($year1,$month1,$day1)
-	{		
-		$year_diff  = (int)date("Y") - (int)$year1;		
-	    $month_diff = (int)date("m") - (int)$month1;	       
-	    $day_diff   = (int)date("d") - (int)$day1;	    
-	    
-	    if ($month_diff < 0) 
-	    	$year_diff--;
-	    elseif (($month_diff==0) && ($day_diff < 0)) 
-	    	$year_diff--;
-	    	
-	    return $year_diff;
-		
-	}
 
 	private function validateLoginForm(&$formData)
 	{		
@@ -323,6 +297,27 @@ class AccountController extends CustomControllerAction
 			}			
         } 
         $this->view->error = $this->error;
+        $this->view->formData = $formData;
+	}
+	
+	/**
+	 * Enter description here...
+	 *
+	 * @param array array('year' => 2006, 'month' => 4, 'day' => 18);
+	 */
+	private function getAge($year1,$month1,$day1)
+	{		
+		$year_diff  = (int)date("Y") - (int)$year1;		
+	    $month_diff = (int)date("m") - (int)$month1;	       
+	    $day_diff   = (int)date("d") - (int)$day1;	    
+	    
+	    if ($month_diff < 0) 
+	    	$year_diff--;
+	    elseif (($month_diff==0) && ($day_diff < 0)) 
+	    	$year_diff--;
+	    	
+	    return $year_diff;
+		
 	}
 }
 ?>

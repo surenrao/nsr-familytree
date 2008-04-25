@@ -53,6 +53,12 @@ the highlighted fields and resubmit the form.
 </p>
 
 <fieldset>
+<label for="username">Username:</label>
+<input type="text" name="username" id="username" />
+{include file='error_div.tpl' error=$error.username}
+</fieldset>
+
+<fieldset>
 <label for="email">Email:</label>
 <input type="text" name="email" id="email" />
 {include file='error_div.tpl' error=$error.email}

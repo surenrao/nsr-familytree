@@ -7,7 +7,9 @@
 <li><a href="/admin/">List Users</a></li>
 <li><a href="/admin/">Update UserType</a></li>
 </ul>
-
+Sample Datagrid http://devzone.zend.com/article/3019-Creating-Data-Tables-With-PEAR-Structures_DataGrid 
+http://pear.php.net/manual/en/package.structures.structures-datagrid.php
+{$datagrid}
 <br />
 <br />
 <br />

@@ -28,7 +28,7 @@ class CustomControllerAclManager extends Zend_Controller_Plugin_Abstract
 		// add an exception so guests can log in or register
 		// in order to gain privilege
 		$this->acl->allow('guest', 'account', array('login',
-							'fetchpassword','register',
+							'fetchpassword','register','activate',
 							'registercomplete','logout'));
 		// allow members access to the account management area
 		$this->acl->allow('member', 'account');
