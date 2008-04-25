@@ -7,5 +7,7 @@ class User
 	public $userType;
 	public $tsCreated;
 	public $tsLastLogin;	
+	public $active;
+	public $activationCode;
 }
 ?>

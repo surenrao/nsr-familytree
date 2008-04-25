@@ -57,6 +57,10 @@ Develeopment Configurations
 	# pear install -f Text_CAPTCHA
 	# pear install -f Image_Text
 	# pear install Text_Password
+	# pear install -o --alldeps Structures_DataGrid
+	# pear install Structures_DataGrid_Renderer_HTMLTable
+	# pear install Structures_DataGrid#datasources
+	# pear install Structures_DataGrid#renderers
 	
 * External Libraries: Zend Framework 1.0.4, Smarty 2.6.19, jquery-1.2.3
 

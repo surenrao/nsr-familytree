@@ -1,5 +1,6 @@
 <?php
 require_once('UserProfile.php');
+require_once('User.php');
 class UserDao
 {
 	protected $db;
@@ -10,8 +11,7 @@ class UserDao
 	 */
     public function __construct()
     {
-    	$this->db = Zend_Registry::get('db');
-    	require_once('User.php');
+    	$this->db = Zend_Registry::get('db');    	
     }
     
     /**
@@ -69,17 +69,57 @@ class UserDao
 	 *
 	 * @param User $user
 	 */
-	public function addUser(User $user)
+	public function addUser(User $user,UserProfile $userProfile=null)
 	{
-		$data = array(
-		    'user_id'     => $user->userId ,
+		$data = array(		    
 		    'username'    => $user->username,
 		    'password'    => $user->password,
 			'user_type'   => $user->userType,
-			'ts_created'  => new Zend_Db_Expr('NOW()')
+			'ts_created'  => new Zend_Db_Expr('NOW()'),
+			'activation_code' => Text_Password::create(8) 
 		);
-
-		$this->db->insert('users', $data);
+		
+		$this->db->beginTransaction();
+		try{
+			$this->db->insert('users', $data);
+			
+			if($userProfile!=null)
+			{
+				$id = $this->db->lastInsertId();
+				
+				$prfileData = array(
+				'user_id'       => $id ,
+				'profile_key'   => 'firstName',
+				'profile_value' => $userProfile->firstName
+				);				
+				$this->db->insert('users_profile', $prfileData);
+				
+				$prfileData = array(
+				'user_id'       => $id ,
+				'profile_key'   => 'lastName',
+				'profile_value' => $userProfile->lastName
+				);				
+				$this->db->insert('users_profile', $prfileData);
+				
+				$prfileData = array(
+				'user_id'       => $id ,
+				'profile_key'   => 'dateOfBirth',
+				'profile_value' => $userProfile->dateOfBirth
+				);				
+				$this->db->insert('users_profile', $prfileData);
+				
+				$prfileData = array(
+				'user_id'       => $id ,
+				'profile_key'   => 'email',
+				'profile_value' => $userProfile->email
+				);				
+				$this->db->insert('users_profile', $prfileData);
+			}
+			$this->db->commit();
+		} catch (Exception $e) {
+			$this->db->rollBack();
+		    echo $e->getMessage();
+		}		
 	}
 	
 	/**
@@ -121,6 +161,21 @@ class UserDao
 	{
 		$data = array(	
 			'user_type'    => $newUserType			
+		);
+
+		$this->db->update('users', $data,'user_id ='.$userId);
+	}
+	
+	/**
+	 * Enter description here...
+	 *
+	 * @param integer $userId
+	 * @param boolean $state
+	 */
+	public function changeActiveState($userId, $state)
+	{		
+		$data = array(	
+			'active'    => $state==true?'T':'F'						
 		);
 
 		$this->db->update('users', $data,'user_id ='.$userId);
