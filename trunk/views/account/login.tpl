@@ -1,5 +1,5 @@
 {include file='header.tpl'}
-<link type="text/css" rel="stylesheet" href="/css/forms.css" />
+<link type="text/css" rel="stylesheet" href="/themes/default/css/forms.css" />
 <div id="content">
 <br/>
 <br/>

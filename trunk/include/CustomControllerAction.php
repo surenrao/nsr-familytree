@@ -7,7 +7,7 @@ class CustomControllerAction extends Zend_Controller_Action
 	{
 		//set db from registry
 		$this->db = Zend_Registry::get('db');
-		
+//		$this->db->setFetchMode(Zend_Db::FETCH_OBJ);
 		//set isLoggedIn
 		$auth = Zend_Auth::getInstance();
 		$this->view->isLoggedIs = false;
