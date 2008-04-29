@@ -5,6 +5,6 @@ PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
 <head>
 <title>{$title|default:'No title'}</title>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
-<link type="text/css" rel="stylesheet" href="/css/page.css" />
+<link type="text/css" rel="stylesheet" href="/themes/default/css/page.css" />
 </head>
 <body>
