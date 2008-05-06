@@ -11,13 +11,13 @@ jQuery(document).ready(function(){
 	jQuery("#list2").jqGrid({ 
 	// the url parameter tells from where to get the data from server 
 	// adding ?nd='+new Date().getTime() prevent IE caching 
-	url:'/utility/jsgrid?nd='+new Date().getTime(), 
+	url:'/admin/jsgrid?nd='+new Date().getTime(), 
 	// datatype parameter defines the format of data returned from the server 
 	// in this case we use a JSON data 
 	datatype: "json", 
 	// colNames parameter is a array in which we describe the names 
 	// in the columns. This is the text that apper in the head of the grid. 
-	colNames:['id','user_id', 'profile_key', 'profile_value'], 
+	colNames:['FirstName','LastName','Username', 'Password', 'UserType','CreatedTime','LastLoginTime','Active','ActivationCode'], 
 	// colModel array describes the model of the column. 
 	// name is the name of the column, 
 	// index is the name passed to the server to sort data 
@@ -26,10 +26,15 @@ jQuery(document).ready(function(){
 	// align is the align of the column (default is left) 
 	// sortable defines if this column can be sorted (default true) 
 	colModel:[ 
-		{name:'id',index:'id', width:55}, 
-		{name:'user_id',index:'user_id', width:40},
-		{name:'profile_key',index:'profile_key asc, profile_key', width:80}, 
-		{name:'profile_value',index:'profile_value', width:200}		
+		{name:'firstname',index:'firstname', width:100}, 
+		{name:'lastname',index:'lastname', width:100},
+		{name:'username',index:'username', width:70,sortable:false}, 
+		{name:'password',index:'password', width:225,sortable:false},
+		{name:'user_type',index:'user_type', width:80},
+		{name:'ts_created',index:'ts_created', width:125},
+		{name:'ts_last_login',index:'ts_last_login', width:125},
+		{name:'active',index:'active', width:45},
+		{name:'activation_code',index:'activation_code', width:50,sortable:false}				
 		], 
 		// pager parameter define that we want to use a pager bar 
 		// in this case this must be a valid html element. 
@@ -45,13 +50,12 @@ jQuery(document).ready(function(){
 		imgpath: '/themes/jqGrid/sand/images',
 		// sortname sets the initial sorting column. Can be a name or number. 
 		// this parameter is added to the url 
-		sortname: 'id', 
+		sortname: 'username', 
 		//viewrecords defines the view the total records from the query in the pager 
 		//bar. The related tag is: records in xml or json definitions. 
 		viewrecords: true, 
-		//sets the sorting order. Default is asc. This parameter is added to the url 
-		sortorder: "desc", 
-		caption: "Demo", 
+		//sets the sorting order. Default is asc. This parameter is added to the url 		 
+		caption: "Users", 
 		}); 
 	}); 
 </script>{/literal}	

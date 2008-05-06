@@ -109,10 +109,10 @@ class AccountController extends CustomControllerAction
 				$user->username = $formData['username'];
 				$user->password = $formData['password'];
 				$user->userType = 'memeber';
+				$user->firstName = $formData['firstname'];
+				$user->lastName = $formData['lastname'];
 				
 				$userPrfil = new UserProfile();
-				$userPrfil->firstName = $formData['firstname'];
-				$userPrfil->lastName = $formData['lastname'];
 				$userPrfil->email = $formData['email'];
 				$userPrfil->dateOfBirth = new Zend_Date(
 				array('year'=>$formData['dobYear'],'month'=>$formData['dobMonth'],'day'=>$formData['dobDay']));

@@ -19,7 +19,24 @@ require_once('Smarty/Smarty.class.php');
 
 Zend_Loader::registerAutoload();
 
-$config = new Zend_Config_Ini('../configs/settings.ini', 'development');
+// load the application configuration (set in server/apache inside virtualhost tag)
+// SetEnv APP_CONFIG_FILE "settings.ini"
+// SetEnv APP_CONFIG_SECTION "development"
+$configFile = '';
+if (isset($_SERVER['APP_CONFIG_FILE']))
+	$configFile = basename($_SERVER['APP_CONFIG_FILE']);
+if (strlen($configFile) == 0)
+	$configFile = 'settings.ini';
+
+$configSection = '';
+
+if (isset($_SERVER['APP_CONFIG_SECTION']))
+	$configSection = basename($_SERVER['APP_CONFIG_SECTION']);
+if (strlen($configSection) == 0)
+	$configSection = 'production';
+	
+$config = new Zend_Config_Ini('../configs/' . $configFile, $configSection);
+//$config = new Zend_Config_Ini('../configs/settings.ini', 'development');
 Zend_Registry::set('config', $config);
 
 // create the application logger

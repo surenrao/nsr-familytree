@@ -2,8 +2,6 @@
 class UserProfile
 {
 	public $userId;
-	public $firstName;
-	public $lastName;
 	public $dateOfBirth;
 	public $address;
 	public $city;
