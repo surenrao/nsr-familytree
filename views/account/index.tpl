@@ -11,8 +11,8 @@
 <h1>My Account</h1>
 <h2>Welcome {$user->username}</h2>
 
-<p> First Name: {$userInfo->firstName}<br/>
-Last Name: {$userInfo->lastName}<br/>
+<p> First Name: {$user->firstName}<br/>
+Last Name: {$user->lastName}<br/>
 Date of Birth: {$userInfo->dateOfBirth}<br/>
 Email: {$userInfo->email}<br/>
 Phone: {$userInfo->phone}<br/>

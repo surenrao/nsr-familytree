@@ -30,6 +30,8 @@ class UserDao
 		$user->userId = $result[0]->user_id;
 		$user->username = $result[0]->username;		
 		$user->password = $result[0]->password;
+		$user->firstName = $result[0]->firstname;
+		$user->lastName = $result[0]->lastname;		
 		$user->userType = $result[0]->user_type;
 		$user->tsLastLogin = $result[0]->ts_last_login;
 		$user->tsCreated = $result[0]->ts_created;		
@@ -55,8 +57,6 @@ class UserDao
 		$userProfile->country = trim(@$result['country']);
 		$userProfile->dateOfBirth = trim(@$result['dateOfBirth']);
 		$userProfile->email  = trim(@$result['email']);
-		$userProfile->firstName = trim(@$result['firstName']);
-		$userProfile->lastName = trim(@$result['lastName']);
 		$userProfile->phone = trim(@$result['phone']);
 		$userProfile->pinCode = trim(@$result['pinCode']);
 		$userProfile->state = trim(@$result['state']);		
@@ -74,7 +74,9 @@ class UserDao
 		$data = array(		    
 		    'username'    => $user->username,
 		    'password'    => $user->password,
-			'user_type'   => $user->userType,
+			'firstname'   => $user->firstName,
+		    'lastname'    => $user->lastName,
+			'user_type'   => $user->userType,		
 			'ts_created'  => new Zend_Db_Expr('NOW()'),
 			'activation_code' => Text_Password::create(8) 
 		);
@@ -85,21 +87,7 @@ class UserDao
 			
 			if($userProfile!=null)
 			{
-				$id = $this->db->lastInsertId();
-				
-				$prfileData = array(
-				'user_id'       => $id ,
-				'profile_key'   => 'firstName',
-				'profile_value' => $userProfile->firstName
-				);				
-				$this->db->insert('users_profile', $prfileData);
-				
-				$prfileData = array(
-				'user_id'       => $id ,
-				'profile_key'   => 'lastName',
-				'profile_value' => $userProfile->lastName
-				);				
-				$this->db->insert('users_profile', $prfileData);
+				$id = $this->db->lastInsertId();				
 				
 				$prfileData = array(
 				'user_id'       => $id ,
